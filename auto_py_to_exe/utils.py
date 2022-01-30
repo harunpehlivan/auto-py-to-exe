@@ -56,7 +56,11 @@ def get_warnings():
 
     # Make sure PyInstaller 4.0 or above is being used with Python 3.8 and 3.9
     try:
-        if sys.version_info.major == 3 and (sys.version_info.minor == 8 or sys.version_info.minor == 9) and float(pyinstaller_version) < 4.1:
+        if (
+            sys.version_info.major == 3
+            and sys.version_info.minor in [8, 9]
+            and float(pyinstaller_version) < 4.1
+        ):
             message = 'PyInstaller 4.0 and below does not officially support Python 3.8 and 3.9.'
             message += '\nYou are currently using PyInstaller {pyinstaller_version}.'.format(pyinstaller_version=pyinstaller_version)
             message += '\nIt is highly recommended to update your version of PyInstaller using: python -m pip install pyinstaller --upgrade'
@@ -82,8 +86,11 @@ def get_warnings():
 
     # If Python 3.10.0 is being used, we are probably going to see `IndexError: tuple index out of range`.
     if sys.version_info.major == 3 and sys.version_info.minor == 10 and sys.version_info.micro == 0:
-        message = 'You are using Python 3.10.0. This version of Python has a bug that causes PyInstaller to fail.'
-        message += '\nPlease upgrade to Python 3.10.1 or above.'
+        message = (
+            'You are using Python 3.10.0. This version of Python has a bug that causes PyInstaller to fail.'
+            + '\nPlease upgrade to Python 3.10.1 or above.'
+        )
+
         warnings.append({
             'message': message,
             'link': "https://github.com/brentvollebregt/auto-py-to-exe/issues/215"

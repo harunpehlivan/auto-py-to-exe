@@ -15,10 +15,8 @@ class PythonScriptAsFile:
 
         # Create the Python script
         self.file_path = os.path.join(self.directory, self.filename)
-        f = open(self.file_path, 'w')
-        f.write(self.content)
-        f.close()
-
+        with open(self.file_path, 'w') as f:
+            f.write(self.content)
         return self.file_path
 
     def __exit__(self, exc_type, exc_val, exc_tb):

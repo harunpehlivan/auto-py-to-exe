@@ -88,11 +88,10 @@ def does_folder_exist(path):
 def import_configuration():
     """ Get configuration data from a file """
     file_path = dialogs.ask_file('json')
-    if file_path is not None:
-        with open(file_path) as f:
-            return json.load(f)
-    else:
+    if file_path is None:
         return None
+    with open(file_path) as f:
+        return json.load(f)
 
 
 @eel.expose
@@ -138,7 +137,7 @@ def start(open_mode):
         chrome_available = utils.can_use_chrome()
         if open_mode == UIOpenMode.CHROME and chrome_available:
             eel.start('index.html', size=(650, 672), port=0)
-        elif open_mode == UIOpenMode.USER_DEFAULT or (open_mode == UIOpenMode.CHROME and not chrome_available):
+        elif open_mode in [UIOpenMode.USER_DEFAULT, UIOpenMode.CHROME]:
             eel.start('index.html', size=(650, 672), port=0, mode='user default')
         else:
             port = utils.get_port()

@@ -10,11 +10,10 @@ except ImportError:
         if sys.version_info.major < 3:
             print("Error: Tkinter not found")
             print('For linux, you can install Tkinter by executing: "sudo apt-get install python-tk"')
-            sys.exit(1)
         else:
             print("Error: tkinter not found")
             print('For linux, you can install tkinter by executing: "sudo apt-get install python3-tk"')
-            sys.exit(1)
+        sys.exit(1)
 try:
     from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames, asksaveasfilename
 except ImportError:
@@ -82,10 +81,9 @@ def ask_file_save_location(file_type):
         file_path = asksaveasfilename(parent=root, filetypes=file_types)
     root.update()
 
-    if bool(file_path):
-        if file_type == 'json':
-            return file_path if file_path.endswith('.json') else file_path + '.json'
-        else:
-            return file_path
-    else:
+    if not bool(file_path):
         return None
+    if file_type == 'json':
+        return file_path if file_path.endswith('.json') else file_path + '.json'
+    else:
+        return file_path

@@ -60,9 +60,8 @@ def will_packaging_overwrite_existing(file_path, one_file, output_folder):
     if one_file:
         if no_extension + '.exe' in os.listdir(output_folder):
             return True
-    else:
-        if no_extension in os.listdir(output_folder):
-            return True
+    elif no_extension in os.listdir(output_folder):
+        return True
     return False
 
 
